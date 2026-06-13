@@ -1,7 +1,7 @@
 {
   "extends": "@react-native/typescript-config",
   "compilerOptions": {
-    "types": ["jest"],
+    "types": ["jest", "node"],
     "lib": ["ES2015", "DOM"]
   },
   "include": ["**/*.ts", "**/*.tsx"],
