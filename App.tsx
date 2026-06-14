@@ -1,15 +1,14 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { AppNavigator } from './src/navigation/AppNavigator';
 import 'react-native-url-polyfill/auto';
 
-// Création du client React Query
-// C'est lui qui gère tout le cache des requêtes Supabase
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // Combien de fois retry une requête échouée ?
       retry: 2,
-      // Les données restent "fraîches" 5 minutes avant d'être rechargées
       staleTime: 1000 * 60 * 5,
     },
   },
@@ -17,8 +16,15 @@ const queryClient = new QueryClient({
 
 export default function App(): React.JSX.Element {
   return (
-    // QueryClientProvider rend le cache accessible à tous les composants enfants
-    <QueryClientProvider client={queryClient}>
-    </QueryClientProvider>
+    // GestureHandlerRootView → active les gestes (swipe, etc.)
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      {/* QueryClientProvider → cache des requêtes Supabase */}
+      <QueryClientProvider client={queryClient}>
+        {/* NavigationContainer → conteneur principal de navigation */}
+        <NavigationContainer>
+          <AppNavigator />
+        </NavigationContainer>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }
